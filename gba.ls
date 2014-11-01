@@ -7,5 +7,7 @@ SECTIONS {
   }
   .data   : { *(.data) }
   .rodata : { *(.rodata*) }
+  bss_start = . ;
   .bss    : { *(.bss) }
+  bss_end = . ;
  }
