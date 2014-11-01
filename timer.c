@@ -60,6 +60,5 @@ static void timer3_interrupt(void)
 
 static void timer_interrupt(int timer)
 {
-	/** @todo timer register control */
 	(*timer_callback[timer])();
 }
