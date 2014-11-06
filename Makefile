@@ -32,6 +32,8 @@ gbacal.elf: ${OBJS} gba.ls
 clean:
 	rm -f gbacal.bin gbacal.elf ${OBJS} ${DEPS}
 
+${OBJS} ${DEPS}: Makefile
+
 depend: ${DEPS}
 
 ifneq (${MAKECMDGOALS},depend)
