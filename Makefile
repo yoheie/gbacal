@@ -25,7 +25,7 @@ gbacal.elf: ${OBJS} gba.ls
 	${CC} -c $< -o $@
 
 %.d: %.c
-	${CC} -MM $< | sed "s/:/ $@:/" > $@ ; \
+	${CC} -MM -MP $< | sed "s/o:/o $@:/" > $@ ; \
 	test -s $@ || rm -f $@ ; \
 	test -s $@
 
