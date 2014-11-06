@@ -2,6 +2,10 @@ AS = as-arm
 CC = gcc-arm
 LD = ld-arm
 
+ASFLAGS =
+CFLAGS  =
+LDFLAGS =
+
 SRCS = $(wildcard *.c)
 ASMS = $(wildcard *.s)
 
@@ -16,16 +20,16 @@ gbacal.bin: gbacal.elf
 	objcopy-arm -O binary $< $@
 
 gbacal.elf: ${OBJS} gba.ls
-	${LD} -o $@ -T gba.ls ${OBJS}
+	${LD} ${LDFLAGS} -o $@ -T gba.ls ${OBJS}
 
 %.o: %.s
-	${AS} $< -o $@
+	${AS} ${ASFLAGS} $< -o $@
 
 %.o: %.c
-	${CC} -c $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@
 
 %.d: %.c
-	${CC} -MM -MP $< | sed "s/o:/o $@:/" > $@ ; \
+	${CC} ${CFLAGS} -MM -MP $< | sed "s/o:/o $@:/" > $@ ; \
 	test -s $@ || rm -f $@ ; \
 	test -s $@
 
