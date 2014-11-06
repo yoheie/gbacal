@@ -49,3 +49,14 @@ void print_text(int line, int column, const char *text, unsigned short color)
 		}
 	}
 }
+
+void display_image(int x, int y, int width, int height, const unsigned short *image)
+{
+	int xofs;
+	int yofs;
+	for (yofs = 0; yofs < height; yofs++) {
+		for (xofs = 0; xofs < width; xofs++) {
+			VRAM[y + yofs][x + xofs] = *image++;
+		}
+	}
+}
