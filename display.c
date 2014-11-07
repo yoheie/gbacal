@@ -31,7 +31,7 @@ void print_text(int line, int column, const char *text, unsigned short color)
 	while ((c = *text++) != '\0') {
 		for (y = 0; y < FONT_Y; y++) {
 			for (x = 0; x < FONT_X; x++) {
-				vram_y = y + line * FONT_Y; 
+				vram_y = y + line * FONT_Y;
 				vram_x = x + column * FONT_X;
 				if ((font[c][y] & (0x80 >> x)) == 0) {
 					VRAM[vram_y][vram_x] = COLOR_WHITE;

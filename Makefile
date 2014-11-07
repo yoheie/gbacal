@@ -33,10 +33,10 @@ gbacal.elf: ${OBJS} gba.ls
 	test -s $@ || rm -f $@ ; \
 	test -s $@
 
+${OBJS} ${DEPS}: Makefile
+
 clean:
 	rm -f gbacal.bin gbacal.elf ${OBJS} ${DEPS}
-
-${OBJS} ${DEPS}: Makefile
 
 depend: ${DEPS}
 

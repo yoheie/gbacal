@@ -8,7 +8,7 @@
 #define INITIAL_MONTH 10
 
 #define LINE_OFFSET 2
-#define COLUMN_OFFSET 10 
+#define COLUMN_OFFSET 10
 
 #define BUTTON_PRESS_TIME 64
 #define BUTTON_STATUS_REG (*(unsigned short *)0x04000130)
@@ -99,12 +99,12 @@ int main(void)
 			line0_text[3] = num_char[year /    1 % 10];
 			line0_text[5] = num_char[month /  10 % 10];
 			line0_text[6] = num_char[month /   1 % 10];
-		
+
 			print_text(LINE_OFFSET + 0, COLUMN_OFFSET + 6, line0_text, COLOR_BLACK);
 			for (w = 0; w < 7; w++) {
 				print_day(2, w, weekday_label[w]);
 			}
-		
+
 			if (month == 2) {
 				if (year % 4 == 0 && ((year % 100 != 0) || (year % 400 == 0))) {
 					days = 29;
@@ -119,7 +119,7 @@ int main(void)
 			else {
 				days = 31;
 			}
-		
+
 			if (month <= 2) {
 				ytmp = year - 1;
 				mtmp = month + 12;
@@ -128,9 +128,9 @@ int main(void)
 				ytmp = year;
 				mtmp = month;
 			}
-		
+
 			weekday = (ytmp + ytmp/4 - ytmp/100 + ytmp/400 + (mtmp*13 + 8)/5 + 1) % 7;
-		
+
 			line = 4;
 
 			for (w = 0; w < weekday; w++) {
@@ -138,7 +138,7 @@ int main(void)
 				day_text[1] = ' ';
 				print_day(line, w, day_text);
 			}
-		
+
 			for (d = 1; d < days; d++) {
 				day_text[0] = ((d/10 == 0) ? ' ' : num_char[d/10]);
 				day_text[1] = num_char[d%10];
@@ -148,7 +148,7 @@ int main(void)
 					w = 0;
 				}
 			}
-		
+
 			day_text[0] = ((d/10 == 0) ? ' ' : num_char[d/10]);
 			day_text[1] = num_char[d%10];
 			print_day(line, w, day_text);
