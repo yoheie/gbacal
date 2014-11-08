@@ -2,6 +2,7 @@
 #include "color.h"
 #include "display.h"
 #include "timer.h"
+#include "image.h"
 
 
 #define INITIAL_YEAR 2014
@@ -44,6 +45,7 @@ int main(void)
 	int year = INITIAL_YEAR;
 	int month = INITIAL_MONTH;
 	int update = 1;
+	int hide = 0;
 	int days;
 	int ytmp;
 	int mtmp;
@@ -57,111 +59,143 @@ int main(void)
 	interrupt_init();
 	timer_init(0, button_scan_timer);
 	display_init();
+	display_image(
+			(DISPLAY_X - IMAGE_SIZE_X) / 2,
+			(DISPLAY_Y - IMAGE_SIZE_Y) / 2,
+			IMAGE_SIZE_X, IMAGE_SIZE_Y,
+			IMAGE_START
+			);
 	timer_start(0);
 
 	while (1) {
+		if (button_event[BUTTON_SELECT]) {
+			button_event[BUTTON_SELECT] = 0;
+			hide = !hide;
+			update = 1;
+		}
 		if (button_event[BUTTON_START]) {
 			button_event[BUTTON_START] = 0;
-			year = INITIAL_YEAR;
-			month = INITIAL_MONTH;
-			update = 1;
+			if (!hide) {
+				year = INITIAL_YEAR;
+				month = INITIAL_MONTH;
+				update = 1;
+			}
 		}
 		if (button_event[BUTTON_RIGHT]) {
 			button_event[BUTTON_RIGHT] = 0;
-			if (++month > 12) {
-				year++;
-				month = 1;
+			if (!hide) {
+				if (++month > 12) {
+					year++;
+					month = 1;
+				}
+				update = 1;
 			}
-			update = 1;
 		}
 		if (button_event[BUTTON_LEFT]) {
 			button_event[BUTTON_LEFT] = 0;
-			if (--month < 1) {
-				year--;
-				month = 12;
+			if (!hide) {
+				if (--month < 1) {
+					year--;
+					month = 12;
+				}
+				update = 1;
 			}
-			update = 1;
 		}
 		if (button_event[BUTTON_UP]) {
 			button_event[BUTTON_UP] = 0;
-			year--;
-			update = 1;
+			if (!hide) {
+				year--;
+				update = 1;
+			}
 		}
 		if (button_event[BUTTON_DOWN]) {
 			button_event[BUTTON_DOWN] = 0;
-			year++;
-			update = 1;
+			if (!hide) {
+				year++;
+				update = 1;
+			}
 		}
 		if (update) {
-			line0_text[0] = num_char[year / 1000 % 10];
-			line0_text[1] = num_char[year /  100 % 10];
-			line0_text[2] = num_char[year /   10 % 10];
-			line0_text[3] = num_char[year /    1 % 10];
-			line0_text[5] = num_char[month /  10 % 10];
-			line0_text[6] = num_char[month /   1 % 10];
-
-			print_text(LINE_OFFSET + 0, COLUMN_OFFSET + 6, line0_text, COLOR_BLACK);
-			for (w = 0; w < 7; w++) {
-				print_day(2, w, weekday_label[w]);
+			if (hide) {
+				fill(96, 16, 42, 8, COLOR_WHITE);
+				display_image(
+						(DISPLAY_X - IMAGE_SIZE_X) / 2,
+						(DISPLAY_Y - IMAGE_SIZE_Y) / 2,
+						IMAGE_SIZE_X, IMAGE_SIZE_Y,
+						IMAGE_START
+						);
 			}
+			else {
+				line0_text[0] = num_char[year / 1000 % 10];
+				line0_text[1] = num_char[year /  100 % 10];
+				line0_text[2] = num_char[year /   10 % 10];
+				line0_text[3] = num_char[year /    1 % 10];
+				line0_text[5] = num_char[month /  10 % 10];
+				line0_text[6] = num_char[month /   1 % 10];
 
-			if (month == 2) {
-				if (year % 4 == 0 && ((year % 100 != 0) || (year % 400 == 0))) {
-					days = 29;
+				print_text(LINE_OFFSET + 0, COLUMN_OFFSET + 6, line0_text, COLOR_BLACK);
+				for (w = 0; w < 7; w++) {
+					print_day(2, w, weekday_label[w]);
+				}
+
+				if (month == 2) {
+					if (year % 4 == 0 && ((year % 100 != 0) || (year % 400 == 0))) {
+						days = 29;
+					}
+					else {
+						days = 28;
+					}
+				}
+				else if (month == 4 || month == 6 || month == 9 || month == 11) {
+					days = 30;
 				}
 				else {
-					days = 28;
+					days = 31;
 				}
-			}
-			else if (month == 4 || month == 6 || month == 9 || month == 11) {
-				days = 30;
-			}
-			else {
-				days = 31;
-			}
 
-			if (month <= 2) {
-				ytmp = year - 1;
-				mtmp = month + 12;
-			}
-			else {
-				ytmp = year;
-				mtmp = month;
-			}
-
-			weekday = (ytmp + ytmp/4 - ytmp/100 + ytmp/400 + (mtmp*13 + 8)/5 + 1) % 7;
-
-			line = 4;
-
-			for (w = 0; w < weekday; w++) {
-				day_text[0] = ' ';
-				day_text[1] = ' ';
-				print_day(line, w, day_text);
-			}
-
-			for (d = 1; d < days; d++) {
-				day_text[0] = ((d/10 == 0) ? ' ' : num_char[d/10]);
-				day_text[1] = num_char[d%10];
-				print_day(line, w, day_text);
-				if (++w > 6) {
-					line += 2;
-					w = 0;
+				if (month <= 2) {
+					ytmp = year - 1;
+					mtmp = month + 12;
 				}
-			}
+				else {
+					ytmp = year;
+					mtmp = month;
+				}
 
-			day_text[0] = ((d/10 == 0) ? ' ' : num_char[d/10]);
-			day_text[1] = num_char[d%10];
-			print_day(line, w, day_text);
-			w++;
-			while (line <= 14) {
-				while (w < 7) {
+				weekday = (ytmp + ytmp/4 - ytmp/100 + ytmp/400 + (mtmp*13 + 8)/5 + 1) % 7;
+
+				line = 4;
+
+				for (w = 0; w < weekday; w++) {
 					day_text[0] = ' ';
 					day_text[1] = ' ';
 					print_day(line, w, day_text);
-					w++;
 				}
-				w = 0;
-				line += 2;
+
+				for (d = 1; d < days; d++) {
+					day_text[0] = ((d/10 == 0) ? ' ' : num_char[d/10]);
+					day_text[1] = num_char[d%10];
+					print_day(line, w, day_text);
+					if (++w > 6) {
+						line += 2;
+						w = 0;
+					}
+				}
+
+				day_text[0] = ((d/10 == 0) ? ' ' : num_char[d/10]);
+				day_text[1] = num_char[d%10];
+				print_day(line, w, day_text);
+				w++;
+				while (line <= 14) {
+					while (w < 7) {
+						day_text[0] = ' ';
+						day_text[1] = ' ';
+						print_day(line, w, day_text);
+						w++;
+					}
+					w = 0;
+					line += 2;
+				}
 			}
 			update = 0;
 		}

@@ -9,7 +9,9 @@ LDFLAGS =
 SRCS = $(wildcard *.c)
 ASMS = $(wildcard *.s)
 
-OBJS = ${SRCS:.c=.o} ${ASMS:.s=.o}
+IMGS = image/all.img
+
+OBJS = ${SRCS:.c=.o} ${ASMS:.s=.o} ${IMGS:.img=.o}
 DEPS = ${SRCS:.c=.d}
 
 .PHONY:	all clean depend
@@ -27,6 +29,9 @@ gbacal.elf: ${OBJS} gba.ls
 
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
+
+%.o: %.img
+	objcopy-arm -I binary -O elf32-littlearm -B armv4t $< $@
 
 %.d: %.c
 	${CC} ${CFLAGS} -MM -MP $< | sed "s/o:/o $@:/" > $@ ; \
