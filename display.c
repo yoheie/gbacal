@@ -50,6 +50,17 @@ void print_text(int line, int column, const char *text, unsigned short color)
 	}
 }
 
+void fill(int x, int y, int width, int height, unsigned short color)
+{
+	int xofs;
+	int yofs;
+	for (yofs = 0; yofs < height; yofs++) {
+		for (xofs = 0; xofs < width; xofs++) {
+			VRAM[y + yofs][x + xofs] = color;
+		}
+	}
+}
+
 void display_image(int x, int y, int width, int height, const unsigned short *image)
 {
 	int xofs;
