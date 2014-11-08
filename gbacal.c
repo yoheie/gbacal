@@ -163,6 +163,7 @@ int main(void)
 				w = 0;
 				line += 2;
 			}
+			update = 0;
 		}
 	}
 
