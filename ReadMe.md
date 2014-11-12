@@ -12,7 +12,9 @@ GBA の マルチプレイ機能を利用し、ブートケーブル USB を使�
 
 * ARM 用 binutils 2.14・GCC 3.3.2
 * GNU make 3.80
-* optusb
+* [optusb](http://www.skyfree.org/jpn/unixuser/optusb.html)
+
+ARM 用 binutils・GCC を独自にビルドすることも可能です。手順は [setup-gba-arm-tools.sh](https://gist.github.com/yoheie/fd1c68d7b2bdd286a863) を参照してください。
 
 ## 事前準備
 
