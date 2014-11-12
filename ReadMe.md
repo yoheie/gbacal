@@ -2,7 +2,7 @@
 
 ゲームボーイアドバンス (GBA) 上でカレンダーを表示するプログラムです。
 
-『[プロ生ちゃん #カレンダープログラミング プチコンテスト 2014](http://pronama.azurewebsites.net/2014/10/12/calendar-programming-contest/)』参加作品。
+『[マスコットアプリ文化祭 2014 (Mascot Character Apps Contest)](http://pronama.github.io/mascot-apps-contest/2014/)』参加作品。
 
 GBA の マルチプレイ機能を利用し、ブートケーブル USB を使用して PC から GBA へバイナリイメージファイルを転送することで実行します。
 
@@ -14,6 +14,14 @@ GBA の マルチプレイ機能を利用し、ブートケーブル USB を使�
 * GNU make 3.80
 * optusb
 
+## 事前準備
+
+背景画像用のイラストは含んでおりません。事前に [プロ生ちゃんの OneDrive](https://onedrive.live.com/?cid=623F2C273E554172&id=623F2C273E554172!10926&authkey=!AG_2W2VA_dSvBWQ) から `special-data_daioki.zip` を取得し、 `image/` ディレクトリ内に配置しておいてください。
+
+`special-data_daioki.zip` を `image/` ディレクトリ内に配置して `conv_image.sh` を実行することで、背景画像を GBA で扱うバイナリ形式に変換したファイル `all.img` が生成されます。
+
+なお、『Linux から目覚めるぼくらのゲームボーイ!』付属の KNOPPIX 3.3 日本語版では、 ImageMagick のバージョンが古いため `conv_image.sh` による画像の変換が行えません。新しいバージョンの ImageMagick を含む環境を用意してください。
+
 ## ビルド・実行手順
 
 `make` を実行すると、バイナリイメージファイル `gbacal.bin` が生成されます。
@@ -22,7 +30,7 @@ GBA の マルチプレイ機能を利用し、ブートケーブル USB を使�
 
 `optusb` の使用方法は『Linux から目覚めるぼくらのゲームボーイ!』を参照してください。
 
-実行開始後は十字キーの上下左右でそれぞれ一年前・一年後・一月前・一月後に、 START ボタンで実行開始時の年月に表示を変更できます。
+実行開始後は十字キーの上下左右でそれぞれ一年前・一年後・一月前・一月後に、 START ボタンで実行開始時の年月に表示を変更できます。また、 SELECT ボタンでカレンダーの表示/非表示を切り替えられます。
 
 ## ライセンス
 
