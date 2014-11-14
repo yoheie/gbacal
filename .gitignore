@@ -1,0 +1,4 @@
+*.d
+*.o
+/gbacal.elf
+/gbacal.bin
