@@ -2,3 +2,6 @@
 *.o
 /gbacal.elf
 /gbacal.bin
+/image/special-data_daioki.zip
+/image/specialdata/
+/image/*.img
