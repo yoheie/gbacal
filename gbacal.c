@@ -8,6 +8,9 @@
 #define INITIAL_YEAR 2014
 #define INITIAL_MONTH 10
 
+#define YEAR_MIN 1970
+#define YEAR_MAX 9999
+
 #define LINE_OFFSET 2
 #define COLUMN_OFFSET 10
 
@@ -84,35 +87,43 @@ int main(void)
 		if (button_event[BUTTON_RIGHT]) {
 			button_event[BUTTON_RIGHT] = 0;
 			if (!hide) {
-				if (++month > 12) {
-					year++;
-					month = 1;
+				if (year < YEAR_MAX || month < 12) {
+					if (++month > 12) {
+						year++;
+						month = 1;
+					}
+					update = 1;
 				}
-				update = 1;
 			}
 		}
 		if (button_event[BUTTON_LEFT]) {
 			button_event[BUTTON_LEFT] = 0;
 			if (!hide) {
-				if (--month < 1) {
-					year--;
-					month = 12;
+				if (YEAR_MIN < year || 1 < month) {
+					if (--month < 1) {
+						year--;
+						month = 12;
+					}
+					update = 1;
 				}
-				update = 1;
 			}
 		}
 		if (button_event[BUTTON_UP]) {
 			button_event[BUTTON_UP] = 0;
 			if (!hide) {
-				year--;
-				update = 1;
+				if (YEAR_MIN < year) {
+					year--;
+					update = 1;
+				}
 			}
 		}
 		if (button_event[BUTTON_DOWN]) {
 			button_event[BUTTON_DOWN] = 0;
 			if (!hide) {
-				year++;
-				update = 1;
+				if (year < YEAR_MAX) {
+					year++;
+					update = 1;
+				}
 			}
 		}
 		if (update) {
