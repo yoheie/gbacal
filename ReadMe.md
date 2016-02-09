@@ -28,7 +28,7 @@ ARM 用 binutils・GCC を独自にビルドすることも可能です。手順
 
 ## ライセンス
 
-[zlib ライセンス](http://opensource.org/licenses/Zlib) ([日本語訳](http://osdn.jp/projects/opensource/wiki/licenses%2Fzlib_libpng_license)) とします。
+[zlib ライセンス](https://opensource.org/licenses/Zlib) ([日本語訳](https://osdn.jp/projects/opensource/wiki/licenses%2Fzlib_libpng_license)) とします。
 
 Copyright (c) 2014 Yohei Endo <yoheie@gmail.com>
 
