@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd `dirname $0`
+cd -- "`dirname $0`"
 
 if [ ! -d specialdata ] ; then
   if [ ! -f special-data_daioki.zip ] ; then
