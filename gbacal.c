@@ -15,7 +15,7 @@
 #define COLUMN_OFFSET 10
 
 #define BUTTON_PRESS_TIME 64
-#define BUTTON_STATUS_REG (*(unsigned short *)0x04000130)
+#define BUTTON_STATUS_REG (*(volatile unsigned short *)0x04000130)
 
 
 enum {

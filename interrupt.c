@@ -1,10 +1,10 @@
 #include "interrupt.h"
 
-#define INT_ENTRY_REG  (*(void (**)(void))0x03007FFC)
+#define INT_ENTRY_REG  (*(void (* volatile *)(void))0x03007FFC)
 
-#define INT_ENABLE_REG (*(unsigned short *)0x04000200)
-#define INT_FLAG_REG   (*(unsigned short *)0x04000202)
-#define INT_MASTER_REG (*(unsigned short *)0x04000208)
+#define INT_ENABLE_REG (*(volatile unsigned short *)0x04000200)
+#define INT_FLAG_REG   (*(volatile unsigned short *)0x04000202)
+#define INT_MASTER_REG (*(volatile unsigned short *)0x04000208)
 
 static void interrupt(void);
 
