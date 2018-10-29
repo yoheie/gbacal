@@ -35,8 +35,7 @@ gbacal.elf: ${OBJS} gba.ls
 
 %.d: %.c
 	${CC} ${CFLAGS} -MM -MP $< | sed "s/o:/o $@:/" > $@ ; \
-	test -s $@ || rm -f $@ ; \
-	test -s $@
+	test -s $@ || (rm -f $@ ; false)
 
 ${OBJS} ${DEPS}: Makefile
 
