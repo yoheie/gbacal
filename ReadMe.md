@@ -36,7 +36,7 @@ ARM 用 binutils・GCC を独自にビルドすることも可能です。手順
 
 ## ライセンス
 
-背景画像を含まないソースコード一式は [zlib ライセンス](https://opensource.org/licenses/Zlib) ([日本語訳](https://osdn.jp/projects/opensource/wiki/licenses%2Fzlib_libpng_license)) とします。
+背景画像を含まないソースコード一式は [zlib ライセンス](https://opensource.org/licenses/Zlib) ([日本語訳](https://licenses.opensource.jp/Zlib/Zlib.html)) とします。
 
 背景画像を含む生成物は、画像及び各キャラクターの利用条件による制限を受けますのでご注意ください。
 
